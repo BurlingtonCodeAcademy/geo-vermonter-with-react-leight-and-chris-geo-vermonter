@@ -7,3 +7,23 @@
   height: 400px;
   width: 800px;
 }
+
+#N {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#S {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+#E {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#W {
+  grid-column: 1;
+  grid-row: 2;
+}

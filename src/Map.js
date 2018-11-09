@@ -27,25 +27,25 @@ class Map extends React.Component {
   }
 
   updateMap = () => {
-    if (this.map) {
-      this.map.setView(this.props.latlng, this.props.zoom);
-      this.props.markLatlng &&
-        Leaflet.marker(this.props.markLatlng).addTo(this.map);
-      if (!this.props.status.start) {
-        this.props.countiesVT.setStyle({
-          color: "blue"
-        });
-      } else {
-        this.props.countiesVT.setStyle({
-          color: "rgba(0,0,0,0)"
-        });
-      }
-      //  if()
+    this.map.setView(this.props.latlng, this.props.zoom);
+    if (this.props.markLatlng && !this.startMarker) {
+      this.startMarker = Leaflet.marker(this.props.markLatlng);
+      this.startMarker.addTo(this.map);
+      this.props.countiesVT.setStyle({
+        color: "rgba(0,0,0,0)"
+      });
+    }
+    if (!this.props.status.start && this.startMarker) {
+      this.startMarker.remove();
+      this.startMarker = null;
+      this.props.countiesVT.setStyle({
+        color: "blue"
+      });
     }
   };
 
   render() {
-    this.updateMap();
+    this.map && this.updateMap();
     return <div ref={this.mapRef} id="mapid" />;
   }
 }

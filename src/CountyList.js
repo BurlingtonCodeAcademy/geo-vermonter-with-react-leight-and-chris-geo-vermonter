@@ -13,9 +13,9 @@ class CountyList extends React.Component {
 
   handleClick = event => {
     if (this.props.address.county.includes(event.target.textContent)) {
-      this.props.updateScore(100);
+      this.props.updateScore(100, 8, false, false);
     } else {
-      this.props.updateScore(-10);
+      this.props.updateScore(-10, 14, true, true);
     }
   };
 

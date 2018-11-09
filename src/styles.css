@@ -8,6 +8,10 @@ button:disabled {
   color: white;
 }
 
+.incorrect {
+  color: red;
+}
+
 #mapid {
   height: 400px;
   width: 800px;

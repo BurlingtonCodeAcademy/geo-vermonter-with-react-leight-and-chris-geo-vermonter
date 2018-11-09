@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Map from "./Map";
-import Leaflet from "leaflet";
 import CountyList from "./CountyList";
+import Info from "./Info";
+import Leaflet from "leaflet";
 import "./styles.css";
 import leafletPip from "@mapbox/leaflet-pip";
 import countyData from "./counties";
@@ -18,7 +19,8 @@ class Game extends React.Component {
       status: {
         start: false,
         guess: false
-      }
+      },
+      address: {}
     };
     this.countiesVT = Leaflet.geoJSON(countyData, { fillOpacity: 0 });
   }
@@ -83,29 +85,34 @@ class Game extends React.Component {
   handleSouth = () => {
     const { latlng } = this.state;
     latlng[0] = latlng[0] - 0.03;
-    this.setState({ latlng });
+    this.setState({ latlng, score: this.state.score - 1 });
   };
 
   handleNorth = () => {
     const { latlng } = this.state;
     latlng[0] = latlng[0] + 0.03;
-    this.setState({ latlng });
+    this.setState({ latlng, score: this.state.score - 1 });
   };
 
   handleEast = () => {
     const { latlng } = this.state;
     latlng[1] = latlng[1] + 0.03;
-    this.setState({ latlng });
+    this.setState({ latlng, score: this.state.score - 1 });
   };
 
   handleWest = () => {
     const { latlng } = this.state;
     latlng[1] = latlng[1] - 0.03;
-    this.setState({ latlng });
+    this.setState({ latlng, score: this.state.score - 1 });
   };
 
-  updateScore = score => {
-    this.setState({ score: (this.state.score += score) });
+  updateScore = (score, zoom, start, guess) => {
+    const newState = { ...this.state };
+    newState.score += score;
+    newState.zoom = zoom;
+    newState.status.start = start;
+    newState.status.guess = guess;
+    this.setState(newState);
   };
 
   render() {
@@ -145,6 +152,12 @@ class Game extends React.Component {
             updateScore={this.updateScore}
           />
         )}
+        <Info
+          address={this.state.address}
+          latlng={this.state.markLatlng}
+          status={this.state.status}
+          score={this.state.score}
+        />
       </div>
     );
   }

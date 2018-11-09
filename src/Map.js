@@ -22,13 +22,25 @@ class Map extends React.Component {
       }
     ).addTo(this.map);
     Leaflet.geoJSON(borderData, { fillOpacity: 0 }).addTo(this.map);
+    this.props.countiesVT.addTo(this.map);
     this.map._handlers.forEach(handler => handler.disable());
   }
 
   updateMap = () => {
     if (this.map) {
       this.map.setView(this.props.latlng, this.props.zoom);
-      Leaflet.marker(this.props.markLatlng).addTo(this.map);
+      this.props.markLatlng &&
+        Leaflet.marker(this.props.markLatlng).addTo(this.map);
+      if (!this.props.status.start) {
+        this.props.countiesVT.setStyle({
+          color: "blue"
+        });
+      } else {
+        this.props.countiesVT.setStyle({
+          color: "rgba(0,0,0,0)"
+        });
+      }
+      //  if()
     }
   };
 

@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+button:disabled {
+  background-color: black;
+  color: white;
+}
+
 #mapid {
   height: 400px;
   width: 800px;

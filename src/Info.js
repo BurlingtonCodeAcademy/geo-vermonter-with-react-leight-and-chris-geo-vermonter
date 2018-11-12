@@ -5,8 +5,9 @@ const Info = props => {
   let lat = "?";
   let lng = "?";
   if (!props.status.start && props.address && props.latlng) {
-    const { latlng } = props;
-    [lat, lng] = latlng.map(coord => Math.round(coord * 10 ** 3) / 10 ** 3);
+    [lat, lng] = props.latlng.map(
+      coord => Math.round(coord * 10 ** 3) / 10 ** 3
+    );
   } else {
     town = "?";
     county = "?";

@@ -106,25 +106,26 @@ class Game extends React.Component {
     this.setState({ latlng, score: this.state.score - 1 });
   };
 
-  updateScore = (score, zoom, start, guess) => {
+  updateScore = (score, zoom, isNotCorrect) => {
     const newState = { ...this.state };
     newState.score += score;
     newState.zoom = zoom;
-    newState.status.start = start;
-    newState.status.guess = guess;
+    newState.status.start = isNotCorrect;
+    newState.status.guess = isNotCorrect;
     this.setState(newState);
   };
 
   render() {
+    const { start, guess } = this.state.status;
     return (
       <div id="map-controls">
-        <button onClick={this.handleStart} disabled={this.state.status.start}>
+        <button onClick={this.handleStart} disabled={start}>
           Start
         </button>
-        <button onClick={this.handleGuess} disabled={!this.state.status.start}>
+        <button onClick={this.handleGuess} disabled={!start}>
           Guess
         </button>
-        <button onClick={this.handleQuit} disabled={!this.state.status.start}>
+        <button onClick={this.handleQuit} disabled={!start}>
           Quit
         </button>
         <button id="N" onClick={this.handleNorth}>
@@ -146,7 +147,7 @@ class Game extends React.Component {
           countiesVT={this.countiesVT}
           status={this.state.status}
         />
-        {this.state.status.guess && (
+        {guess && (
           <CountyList
             address={this.state.address}
             updateScore={this.updateScore}

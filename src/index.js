@@ -82,27 +82,17 @@ class Game extends React.Component {
     this.setState({ status });
   };
 
-  handleSouth = () => {
+  // Dispatcher
+  handleMove = event => {
     const { latlng } = this.state;
-    latlng[0] = latlng[0] - 0.03;
-    this.setState({ latlng, score: this.state.score - 1 });
-  };
-
-  handleNorth = () => {
-    const { latlng } = this.state;
-    latlng[0] = latlng[0] + 0.03;
-    this.setState({ latlng, score: this.state.score - 1 });
-  };
-
-  handleEast = () => {
-    const { latlng } = this.state;
-    latlng[1] = latlng[1] + 0.03;
-    this.setState({ latlng, score: this.state.score - 1 });
-  };
-
-  handleWest = () => {
-    const { latlng } = this.state;
-    latlng[1] = latlng[1] - 0.03;
+    const direction = event.target.id;
+    const directions = {
+      N: () => (latlng[0] += 0.03),
+      S: () => (latlng[0] -= 0.03),
+      E: () => (latlng[1] += 0.03),
+      W: () => (latlng[1] -= 0.03)
+    };
+    directions[direction]();
     this.setState({ latlng, score: this.state.score - 1 });
   };
 
@@ -128,16 +118,16 @@ class Game extends React.Component {
         <button onClick={this.handleQuit} disabled={!start}>
           Quit
         </button>
-        <button id="N" onClick={this.handleNorth}>
+        <button id="N" onClick={this.handleMove}>
           North
         </button>
-        <button id="S" onClick={this.handleSouth}>
+        <button id="S" onClick={this.handleMove}>
           South
         </button>
-        <button id="E" onClick={this.handleEast}>
+        <button id="E" onClick={this.handleMove}>
           East
         </button>
-        <button id="W" onClick={this.handleWest}>
+        <button id="W" onClick={this.handleMove}>
           West
         </button>
         <Map
